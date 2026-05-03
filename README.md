@@ -1,6 +1,19 @@
 # AI Design to Web
 
-一个前后端分离的 AI UI 工作流控制台。后端使用 Go 提供 REST API，前端使用 Vue 3 + Vite 实现可视化执行面板、文档阅读、阶段状态管理和对话式 Agent 调度。
+一个前后端分离的 AI UI 工作流控制台，目标是替代传统 UI 设计师和产品原型设计师在早期方案阶段的大量重复工作。用户只需要用自然语言描述产品、页面、风格和业务约束，系统就可以自动完成产品原型拆解、UI 设计图生成、切图补齐、HTML 还原、视觉复核和 Figma 交接。
+
+后端使用 Go 提供 REST API，前端使用 Vue 3 + Vite 实现可视化执行面板、文档阅读、阶段状态管理和对话式 Agent 调度。
+
+## 产品定位
+
+AI Design to Web 面向“从一句产品需求到可评审原型”的完整设计生产线：
+
+- 替代 UI 设计师的工作：自动生成移动端/网页端高保真 UI 设计图、视觉风格、页面结构、图标和复杂视觉切图。
+- 替代产品原型设计师的流程工作：自动拆 PRD、页面清单、组件结构、交互说明和可交付 HTML 原型。
+- 替代人工切图和走查：用 Gemini 3.1 + GPT-5.5 多轮复核 UI 图、切图资产和最终 HTML，发现缺失切图后继续调用 GPT Image 2 补齐。
+- 连接 Figma 工作流：可生成 Figma 本地插件导入包，把 UI 设计图、HTML 效果截图、切图网格、设计 token 和节点骨架自动写入 Figma 页面，方便后续精修、评审或交付。
+
+> Figma 原生 `.fig` 格式不是公开标准。本项目的可靠路线是“导出 Figma 导入包 → 在 Figma 桌面端运行本地插件 → 自动创建页面并导入素材和规格骨架”，而不是伪造不可用的原生 `.fig` 文件。
 
 ## 开源协议
 
@@ -101,6 +114,8 @@ http://localhost:5173/make?project=seafood-delivery-15
 - 对话式执行台：用自然语言调用产品原型 Agent、image2 UI Agent、image2 图生图切图 Agent、Gemini 审图 Agent、图生 HTML 还原 Agent。
 - Make 独立页面：`/make` 提供类似 Figma Make 的三栏工作台，包括对话组件、Agent 执行过程组件和效果画布组件。
 - 单图生成页面：`/image-make` 提供“对话生成单张 UI 图 → 生成对应切图 → 扫描并生成缺失切图 → 用图片和切图生成 HTML”的独立流水线，每个阶段都可下载，并自动保存历史到本地与 SQLite，刷新后可恢复产物。
+- Figma 自动导入：`/image-make` 可导出 Figma 本地插件导入包，在 Figma 桌面端运行后会自动创建页面，并把 UI 图、HTML 截图、切图网格、设计规格和 token 写入 Figma 画布。
+- HTML/素材完整打包：`/image-make` 可导出完整 HTML + 素材 ZIP、设计节点树和实验 `.fig` 交接文件，方便进入 Figma/OpenPencil/MCP 或代码还原流程继续精修。
 - 细节扫描补切图：Gemini 会先复核 UI 设计图细节，再对比现有 asset-map，识别商品图、Hero、地图路线、状态插画等遗漏的复杂视觉资产，再交给 GPT Image 2 追加生成，避免 HTML 还原时缺图。
 - HTML 还原前复核：重新生成 HTML 前会额外让 Gemini 复核一次设计图比例、区块顺序、真实文案、视觉资产边界和还原锚点，再把复核结果交给 Gemini HTML、GPT-5.5 代码审核和最终视觉 QA。
 - image2 UI 设计稿批量：Stage 3 可设置固定张数或自由规划，逐张调用 image2，并在画布中展示每一张生成的 UI 设计图。
@@ -126,6 +141,29 @@ http://localhost:5173/make?project=seafood-delivery-15
 | OpenPencil / Figma 节点路线 | AI-native 设计编辑器、Figma/.fig、MCP、design token、JSX/Tailwind 导出 | `Gemini 结构化标注 Agent` 输出节点树、组件实例、token 和 Figma/OpenPencil 交接说明 |
 | Open CoDesign 原型路线 | BYOK、多模型、本地优先、Prompt 到 prototype/slides/PDF/ZIP | 模型设置预设 + `图生 HTML 还原 Agent` 输出 Vue/HTML 文件树、sandbox 预览和 ZIP 交付结构 |
 | Prodotypor 多页面路线 | 产品想法到 Figma screens 的多 Agent 分阶段流程 | `产品原型 Agent` 输出 PRD、backlog、pages.yaml、component inventory，再批量进入 image2/Gemini/HTML 链路 |
+
+## Figma 自动导入
+
+`/image-make` 页面右上角的 `Figma 导入包` 会生成一个 ZIP，里面包含：
+
+- `figma-plugin/manifest.json`：Figma 本地开发插件入口。
+- `figma-plugin/code.js` / `ui.html`：自动导入脚本，会在当前 Figma 文件中新建页面。
+- `assets/design/`：第一步生成或上传的 UI 设计图。
+- `assets/generated/`：GPT Image 2 生成的切图、小图标和视觉素材。
+- `assets/preview/`：HTML 还原后的效果截图。
+- `design-node-tree.json` / `design-tokens.json`：给 Figma、OpenPencil 或后续 Agent 使用的结构化设计规格。
+- `source/index.html`：当前 HTML 原型源码。
+
+导入方式：
+
+1. 在 `/image-make` 生成 UI 设计图、切图和 HTML。
+2. 点击右上角 `Figma 导入包` 下载 ZIP。
+3. 解压后打开 Figma 桌面端。
+4. 进入 `Plugins > Development > Import plugin from manifest`。
+5. 选择 `figma-plugin/manifest.json`。
+6. 运行 `AI Design to Web Importer`，点击 `Import current export`。
+
+完成后，Figma 会自动生成一个页面，放入 UI 设计图、HTML 效果截图、切图网格和可编辑的规格骨架。HTML 不能直接 1:1 转成完全可编辑的 Figma 图层，但这个导入包已经把继续精修所需的设计证据和素材集中到同一个 Figma 页面里。
 
 ## API
 

@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "html2canvas": "^1.4.1",
+    "jszip": "^3.10.1",
     "lucide-vue-next": "^0.468.0",
     "vue": "^3.4.38"
   },

@@ -4,6 +4,12 @@ import html2canvas from 'html2canvas'
 import { Code2, Download, FileDown, Image, Layers3, LoaderCircle, Send, Sparkles, Upload, X } from 'lucide-vue-next'
 import { ensureBrowserDirectEnabled, loadAgentRuntimeSettings, runBrowserAgent } from '../services/agentRuntime'
 import { getImageMakeRuns, saveImageMakeRun } from '../services/api'
+import {
+  buildProjectJson,
+  downloadCompleteProjectPackage,
+  downloadExperimentalFigFile,
+  downloadFigmaImportPackage
+} from '../services/exportPackages'
 
 const HISTORY_STORAGE_KEY = 'ai-design-to-web.image-make.history.v1'
 const ACTIVE_HISTORY_STORAGE_KEY = 'ai-design-to-web.image-make.active-history-id.v1'
@@ -40,6 +46,7 @@ const htmlReviewNotes = ref('')
 const historyEntries = ref([])
 const activeHistoryId = ref('')
 const historySyncStatus = ref('')
+const exportStatus = ref('')
 
 const design = computed(() => {
   const designs = designRun.value?.designBatchArtifact?.designs || []
@@ -2857,37 +2864,84 @@ function downloadText(fileName, content, type = 'text/plain;charset=utf-8') {
 }
 
 function downloadProjectJson() {
-  downloadText(
-    'image-make-project.json',
-    JSON.stringify({
-      prompt: prompt.value,
-      referenceImages: referenceImages.value.map((image) => ({
-        name: image.name,
-        type: image.type,
-        size: image.size,
-        localUrl: image.localUrl || image.previewSrc || ''
-      })),
-      useReferenceImages: useReferenceImages.value,
-      assetPlan: assetPlan.value,
-      missingAssetScan: missingAssetScan.value,
-      designDetailReview: designDetailReview.value,
-      designSpec: designSpec.value,
-      design: design.value,
-      assets: assets.value,
-      html: htmlSource.value,
-      codeReview: codeReviewText.value,
-      visualReview: visualReviewText.value,
-      htmlDualReview: htmlDualReview.value,
-      htmlReviewNotes: htmlReviewNotes.value,
-      generatedAt: new Date().toISOString()
-    }, null, 2),
-    'application/json;charset=utf-8'
-  )
+  downloadText('image-make-project.json', JSON.stringify(buildProjectJson(createExportSnapshot()), null, 2), 'application/json;charset=utf-8')
 }
 
 function downloadHtml() {
   if (!htmlSource.value) return
   downloadText('index.html', htmlSource.value, 'text/html;charset=utf-8')
+}
+
+async function exportCompletePackage() {
+  if (!hasProjectOutput.value || runningStep.value) return
+  await runExportTask('正在打包 HTML 与素材', async () => {
+    await ensureExportScreenshot()
+    await downloadCompleteProjectPackage(createExportSnapshot())
+    exportStatus.value = 'HTML 与素材 ZIP 已生成'
+  })
+}
+
+async function exportFigmaPackage() {
+  if (!hasProjectOutput.value || runningStep.value) return
+  await runExportTask('正在生成 Figma 导入包', async () => {
+    await ensureExportScreenshot()
+    await downloadFigmaImportPackage(createExportSnapshot())
+    exportStatus.value = 'Figma 导入包已生成'
+  })
+}
+
+async function exportExperimentalFig() {
+  if (!hasProjectOutput.value || runningStep.value) return
+  await runExportTask('正在生成实验 .fig 文件', async () => {
+    await ensureExportScreenshot()
+    downloadExperimentalFigFile(createExportSnapshot())
+    exportStatus.value = '实验 .fig 交接文件已生成'
+  })
+}
+
+async function runExportTask(status, task) {
+  exportStatus.value = status
+  error.value = ''
+  try {
+    await task()
+  } catch (err) {
+    exportStatus.value = '导出失败'
+    error.value = `导出失败：${err.message}`
+    appendMessage('assistant', `导出失败：${err.message}`)
+  }
+}
+
+async function ensureExportScreenshot() {
+  if (!htmlSource.value || htmlScreenshotDataUrl.value) return
+  htmlScreenshotDataUrl.value = await captureHtmlPreviewScreenshot(htmlSource.value)
+}
+
+function createExportSnapshot() {
+  return {
+    title: currentHistoryTitle.value === '新项目' ? titleFromPrompt(prompt.value) : currentHistoryTitle.value,
+    prompt: prompt.value,
+    useReferenceImages: useReferenceImages.value,
+    referenceImages: referenceImages.value.map((image) => ({
+      name: image.name,
+      type: image.type,
+      size: image.size,
+      localUrl: image.localUrl || image.previewSrc || '',
+      src: image.src || ''
+    })),
+    assetPlan: assetPlan.value,
+    missingAssetScan: missingAssetScan.value,
+    designDetailReview: designDetailReview.value,
+    designSpec: designSpec.value,
+    design: design.value,
+    assets: assets.value,
+    html: htmlSource.value,
+    htmlScreenshotDataUrl: htmlScreenshotDataUrl.value,
+    codeReview: codeReviewText.value,
+    visualReview: visualReviewText.value,
+    htmlDualReview: htmlDualReview.value,
+    htmlReviewNotes: htmlReviewNotes.value,
+    generatedAt: new Date().toISOString()
+  }
 }
 
 onMounted(() => {
@@ -2903,10 +2957,25 @@ onMounted(() => {
         <h2>单图到切图再到 HTML</h2>
         <p>像 Figma Make 一样用对话驱动：先生成一张 UI 设计图，再生成对应切图，最后把设计图和切图还原成 HTML。</p>
       </div>
-      <button class="button button-secondary" type="button" :disabled="!hasProjectOutput" @click="downloadProjectJson">
-        <FileDown :size="16" />
-        下载项目 JSON
-      </button>
+      <div class="image-make-export-actions">
+        <button class="button button-secondary" type="button" :disabled="!hasProjectOutput || Boolean(runningStep)" @click="downloadProjectJson">
+          <FileDown :size="16" />
+          项目 JSON
+        </button>
+        <button class="button button-secondary" type="button" :disabled="!hasProjectOutput || Boolean(runningStep)" @click="exportCompletePackage">
+          <FileDown :size="16" />
+          HTML 素材包
+        </button>
+        <button class="button button-primary" type="button" :disabled="!hasProjectOutput || Boolean(runningStep)" @click="exportFigmaPackage">
+          <FileDown :size="16" />
+          Figma 导入包
+        </button>
+        <button class="button button-secondary" type="button" :disabled="!hasProjectOutput || Boolean(runningStep)" title="实验导出：Figma 原生 .fig 是非公开格式，此文件用于 OpenPencil/Agent 交接。" @click="exportExperimentalFig">
+          <FileDown :size="16" />
+          实验 .fig
+        </button>
+        <small>{{ exportStatus || '导出 HTML、素材、Figma 插件包和实验 .fig' }}</small>
+      </div>
     </section>
 
     <section v-if="error" class="notice notice-error">

@@ -2447,6 +2447,29 @@ li {
   line-height: 24px;
 }
 
+.image-make-export-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+  min-width: 330px;
+  max-width: 620px;
+}
+
+.image-make-export-actions .button {
+  min-height: 38px;
+  padding-inline: 12px;
+}
+
+.image-make-export-actions small {
+  flex-basis: 100%;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: right;
+}
+
 .image-make-grid {
   display: grid;
   grid-template-columns: minmax(320px, 420px) minmax(0, 1fr);
@@ -3464,6 +3487,20 @@ li {
   .pipeline-actions {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .image-make-export-actions {
+    justify-content: stretch;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .image-make-export-actions .button {
+    flex: 1 1 calc(50% - 8px);
+  }
+
+  .image-make-export-actions small {
+    text-align: left;
   }
 
   .image-chat-panel {
