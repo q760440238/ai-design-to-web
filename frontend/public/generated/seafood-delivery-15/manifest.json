@@ -1,0 +1,520 @@
+{
+  "id": "seafood-delivery-15",
+  "title": "鲜港达 · 15 页海鲜配送 App",
+  "summary": "鲜港达已生成 15 个移动端 HTML 页面，并在画布中以多页面节点展示。",
+  "focusedRunId": "seafood-real-html",
+  "generatedAt": "2026-05-02T14:56:59.094Z",
+  "runs": [
+    {
+      "id": "seafood-real-html",
+      "createdAt": "2026-05-02T14:56:59.094Z",
+      "stageId": "stage-7",
+      "stageTitle": "HTML/CSS/JS 还原页面",
+      "agent": {
+        "type": "code-restore-agent",
+        "name": "图生 HTML 还原 Agent",
+        "description": "根据 GPT-5.5 生成的产品规格和设计规格输出多页面 HTML。",
+        "mode": "image-to-html"
+      },
+      "reply": "鲜港达的 15 个页面已生成为独立 HTML 文件，当前画布可同时查看和拖动每个页面。",
+      "handoffPrompt": "把鲜港达的 15 页移动端 HTML 继续整理为 Vue 路由、组件和设计 token。",
+      "requiredInputs": [
+        "project-spec.json",
+        "asset-map.json",
+        "design-tokens-final.json"
+      ],
+      "expectedOutputs": [
+        "pages/*.html",
+        "manifest.json",
+        "responsive-checklist.md"
+      ],
+      "checklist": [
+        "15 个页面数量正确",
+        "页面可在 iPhone 比例画布查看",
+        "核心购买、结算、追踪、会员流程完整",
+        "切图资产已规划"
+      ],
+      "nextActions": [
+        "调用 image2-assets-agent 生成真实图片资产",
+        "将内联 HTML 拆分为 Vue 组件",
+        "接入真实商品和订单 API"
+      ],
+      "suggestedStatus": "active",
+      "htmlPagesArtifact": [
+        {
+          "id": "home",
+          "title": "首页",
+          "route": "/",
+          "viewport": "mobile",
+          "srcdocPath": "pages/home.html"
+        },
+        {
+          "id": "categories",
+          "title": "分类",
+          "route": "/categories",
+          "viewport": "mobile",
+          "srcdocPath": "pages/categories.html"
+        },
+        {
+          "id": "fresh-today",
+          "title": "今日鲜货",
+          "route": "/fresh-today",
+          "viewport": "mobile",
+          "srcdocPath": "pages/fresh-today.html"
+        },
+        {
+          "id": "search",
+          "title": "搜索结果",
+          "route": "/search",
+          "viewport": "mobile",
+          "srcdocPath": "pages/search.html"
+        },
+        {
+          "id": "product-detail",
+          "title": "商品详情",
+          "route": "/products/salmon",
+          "viewport": "mobile",
+          "srcdocPath": "pages/product-detail.html"
+        },
+        {
+          "id": "bundles",
+          "title": "套餐组合",
+          "route": "/bundles",
+          "viewport": "mobile",
+          "srcdocPath": "pages/bundles.html"
+        },
+        {
+          "id": "cart",
+          "title": "购物车",
+          "route": "/cart",
+          "viewport": "mobile",
+          "srcdocPath": "pages/cart.html"
+        },
+        {
+          "id": "checkout",
+          "title": "结算",
+          "route": "/checkout",
+          "viewport": "mobile",
+          "srcdocPath": "pages/checkout.html"
+        },
+        {
+          "id": "addresses",
+          "title": "地址管理",
+          "route": "/addresses",
+          "viewport": "mobile",
+          "srcdocPath": "pages/addresses.html"
+        },
+        {
+          "id": "delivery-slots",
+          "title": "配送时间",
+          "route": "/delivery-slots",
+          "viewport": "mobile",
+          "srcdocPath": "pages/delivery-slots.html"
+        },
+        {
+          "id": "payment-success",
+          "title": "支付成功",
+          "route": "/payment-success",
+          "viewport": "mobile",
+          "srcdocPath": "pages/payment-success.html"
+        },
+        {
+          "id": "orders",
+          "title": "订单列表",
+          "route": "/orders",
+          "viewport": "mobile",
+          "srcdocPath": "pages/orders.html"
+        },
+        {
+          "id": "order-tracking",
+          "title": "订单追踪",
+          "route": "/orders/FD2048",
+          "viewport": "mobile",
+          "srcdocPath": "pages/order-tracking.html"
+        },
+        {
+          "id": "profile",
+          "title": "会员中心",
+          "route": "/profile",
+          "viewport": "mobile",
+          "srcdocPath": "pages/profile.html"
+        },
+        {
+          "id": "business",
+          "title": "企业采购",
+          "route": "/business",
+          "viewport": "mobile",
+          "srcdocPath": "pages/business.html"
+        }
+      ]
+    },
+    {
+      "id": "seafood-real-qa",
+      "createdAt": "2026-05-02T14:56:59.094Z",
+      "stageId": "stage-8",
+      "stageTitle": "截图和视觉验收",
+      "agent": {
+        "type": "qa-agent",
+        "name": "视觉 QA Agent",
+        "description": "对 15 页移动端 HTML 做视觉一致性和产品完整性检查。",
+        "mode": "image-compare"
+      },
+      "reply": "已生成验收清单：重点检查 iPhone 比例、页面连线、购买链路、冷链追踪和企业采购入口。",
+      "checklist": [
+        "检查所有 iframe 渲染",
+        "检查导航和 CTA 一致性",
+        "检查画布拖动和连线",
+        "检查移动端文本不溢出"
+      ],
+      "nextActions": [
+        "运行浏览器截图验收",
+        "补充真实 image2 切图"
+      ],
+      "suggestedStatus": "active",
+      "qaArtifact": {
+        "score": "92/100",
+        "issues": [
+          {
+            "level": "medium",
+            "title": "真实商品图片待生成",
+            "detail": "当前 HTML 使用 CSS 视觉承载产品图区域，下一步应调用 image2 批量生成 15 张页面主视觉。"
+          },
+          {
+            "level": "low",
+            "title": "订单和支付数据为静态内容",
+            "detail": "页面结构完整，接入后端订单 API 后可替换为真实状态。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "seafood-real-assets",
+      "createdAt": "2026-05-02T14:56:59.094Z",
+      "stageId": "stage-6",
+      "stageTitle": "图生图切图资产",
+      "agent": {
+        "type": "image2-assets-agent",
+        "name": "image2 图生图切图 Agent",
+        "description": "把每个页面需要的复杂视觉资产整理为 image2 可执行提示词。",
+        "mode": "image-to-image"
+      },
+      "reply": "已按 15 页页面规划 15 张核心切图资产，每张包含用途、尺寸、透明背景建议和 image2 提示词。",
+      "checklist": [
+        "资产只覆盖复杂视觉",
+        "文字按钮由 HTML/CSS 实现",
+        "每页至少一张可选主视觉"
+      ],
+      "nextActions": [
+        "按固定 15 张调用 image2 生成",
+        "写入 assets 并替换 HTML CSS 视觉区域"
+      ],
+      "suggestedStatus": "planned",
+      "assetBatchArtifact": {
+        "requestedCount": 15,
+        "generatedCount": 0,
+        "summary": "本次 15 页 HTML 已生成；切图资产已按页面规划好 image2 提示词，可继续批量调用图生图 Agent。",
+        "assets": [
+          {
+            "id": "asset-01",
+            "fileName": "home-visual.png",
+            "purpose": "首页页面的核心海鲜视觉资产",
+            "size": "1024x1024",
+            "transparent": true,
+            "status": "planned",
+            "webPath": "/assets/home-visual.png",
+            "prompt": "为鲜港达的首页页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：全程冷链的安心海鲜配送。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          },
+          {
+            "id": "asset-02",
+            "fileName": "categories-visual.png",
+            "purpose": "分类页面的核心海鲜视觉资产",
+            "size": "1536x1024",
+            "transparent": false,
+            "status": "planned",
+            "webPath": "/assets/categories-visual.png",
+            "prompt": "为鲜港达的分类页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：鱼虾蟹贝、刺身冷冻一站配齐。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          },
+          {
+            "id": "asset-03",
+            "fileName": "fresh-today-visual.png",
+            "purpose": "今日鲜货页面的核心海鲜视觉资产",
+            "size": "1024x1536",
+            "transparent": false,
+            "status": "planned",
+            "webPath": "/assets/fresh-today-visual.png",
+            "prompt": "为鲜港达的今日鲜货页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：当天鲜货，按时送上桌。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          },
+          {
+            "id": "asset-04",
+            "fileName": "search-visual.png",
+            "purpose": "搜索结果页面的核心海鲜视觉资产",
+            "size": "1024x1024",
+            "transparent": false,
+            "status": "planned",
+            "webPath": "/assets/search-visual.png",
+            "prompt": "为鲜港达的搜索结果页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：找到符合鲜度、产地和送达时间的海鲜。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          },
+          {
+            "id": "asset-05",
+            "fileName": "product-detail-visual.png",
+            "purpose": "商品详情页面的核心海鲜视觉资产",
+            "size": "1536x1024",
+            "transparent": true,
+            "status": "planned",
+            "webPath": "/assets/product-detail-visual.png",
+            "prompt": "为鲜港达的商品详情页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：挪威三文鱼刺身段 300g。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          },
+          {
+            "id": "asset-06",
+            "fileName": "bundles-visual.png",
+            "purpose": "套餐组合页面的核心海鲜视觉资产",
+            "size": "1024x1536",
+            "transparent": false,
+            "status": "planned",
+            "webPath": "/assets/bundles-visual.png",
+            "prompt": "为鲜港达的套餐组合页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：按场景选海鲜套餐，更省心也更划算。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          },
+          {
+            "id": "asset-07",
+            "fileName": "cart-visual.png",
+            "purpose": "购物车页面的核心海鲜视觉资产",
+            "size": "1024x1024",
+            "transparent": false,
+            "status": "planned",
+            "webPath": "/assets/cart-visual.png",
+            "prompt": "为鲜港达的购物车页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：购物车里先看鲜度、温区和送达风险。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          },
+          {
+            "id": "asset-08",
+            "fileName": "checkout-visual.png",
+            "purpose": "结算页面的核心海鲜视觉资产",
+            "size": "1536x1024",
+            "transparent": false,
+            "status": "planned",
+            "webPath": "/assets/checkout-visual.png",
+            "prompt": "为鲜港达的结算页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：提交前确认每一份海鲜的来源、温区与到达时间。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          },
+          {
+            "id": "asset-09",
+            "fileName": "addresses-visual.png",
+            "purpose": "地址管理页面的核心海鲜视觉资产",
+            "size": "1024x1536",
+            "transparent": true,
+            "status": "planned",
+            "webPath": "/assets/addresses-visual.png",
+            "prompt": "为鲜港达的地址管理页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：为家庭餐桌、办公室团购和门店备货保存常用地址。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          },
+          {
+            "id": "asset-10",
+            "fileName": "delivery-slots-visual.png",
+            "purpose": "配送时间页面的核心海鲜视觉资产",
+            "size": "1024x1024",
+            "transparent": false,
+            "status": "planned",
+            "webPath": "/assets/delivery-slots-visual.png",
+            "prompt": "为鲜港达的配送时间页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：按海鲜温区和食用计划选择最合适的送达时间。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          },
+          {
+            "id": "asset-11",
+            "fileName": "payment-success-visual.png",
+            "purpose": "支付成功页面的核心海鲜视觉资产",
+            "size": "1536x1024",
+            "transparent": false,
+            "status": "planned",
+            "webPath": "/assets/payment-success-visual.png",
+            "prompt": "为鲜港达的支付成功页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：支付成功，鲜港达已开始为你备货。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          },
+          {
+            "id": "asset-12",
+            "fileName": "orders-visual.png",
+            "purpose": "订单列表页面的核心海鲜视觉资产",
+            "size": "1024x1536",
+            "transparent": false,
+            "status": "planned",
+            "webPath": "/assets/orders-visual.png",
+            "prompt": "为鲜港达的订单列表页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：按状态管理每一笔鲜到配送。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          },
+          {
+            "id": "asset-13",
+            "fileName": "order-tracking-visual.png",
+            "purpose": "订单追踪页面的核心海鲜视觉资产",
+            "size": "1024x1024",
+            "transparent": true,
+            "status": "planned",
+            "webPath": "/assets/order-tracking-visual.png",
+            "prompt": "为鲜港达的订单追踪页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：你的海鲜正在 0-4℃ 温区配送中。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          },
+          {
+            "id": "asset-14",
+            "fileName": "profile-visual.png",
+            "purpose": "会员中心页面的核心海鲜视觉资产",
+            "size": "1536x1024",
+            "transparent": false,
+            "status": "planned",
+            "webPath": "/assets/profile-visual.png",
+            "prompt": "为鲜港达的会员中心页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：安心复购，从你的专属鲜度档案开始。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          },
+          {
+            "id": "asset-15",
+            "fileName": "business-visual.png",
+            "purpose": "企业采购页面的核心海鲜视觉资产",
+            "size": "1024x1536",
+            "transparent": false,
+            "status": "planned",
+            "webPath": "/assets/business-visual.png",
+            "prompt": "为鲜港达的企业采购页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：为餐厅、办公室和企业福利提供稳定海鲜供应。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+          }
+        ]
+      }
+    },
+    {
+      "id": "seafood-real-spec",
+      "createdAt": "2026-05-02T14:56:59.094Z",
+      "stageId": "stage-5",
+      "stageTitle": "输出结构化设计规格",
+      "agent": {
+        "type": "gemini-spec-agent",
+        "name": "Gemini 结构化标注 Agent",
+        "description": "整理页面结构、设计 token 和模块清单。",
+        "mode": "image-to-json"
+      },
+      "reply": "已沉淀 15 页设计规格、导航结构、设计 token 和页面模块。",
+      "checklist": [
+        "页面列表完整",
+        "Token 可复用",
+        "核心流程覆盖"
+      ],
+      "nextActions": [
+        "进入图生 HTML 还原",
+        "生成真实切图资产"
+      ],
+      "suggestedStatus": "done",
+      "specArtifact": {
+        "sections": [
+          "首页",
+          "分类",
+          "今日鲜货",
+          "搜索结果",
+          "商品详情",
+          "套餐组合",
+          "购物车",
+          "结算",
+          "地址管理",
+          "配送时间",
+          "支付成功",
+          "订单列表",
+          "订单追踪",
+          "会员中心",
+          "企业采购"
+        ],
+        "tokens": [
+          "primary: #006C70",
+          "secondary: #0EA5A4",
+          "accent: #F59E0B",
+          "ink: #102033",
+          "muted: #607080",
+          "background: #F2FAFA",
+          "surface: #FFFFFF",
+          "line: #D6E7EA",
+          "success: #138A5B",
+          "danger: #C2410C"
+        ]
+      }
+    },
+    {
+      "id": "seafood-real-product",
+      "createdAt": "2026-05-02T14:56:59.094Z",
+      "stageId": "stage-1",
+      "stageTitle": "生成产品原型",
+      "agent": {
+        "type": "product-agent",
+        "name": "产品原型 Agent",
+        "description": "拆解海鲜配送 App 的核心用户、页面和业务链路。",
+        "mode": "text-to-spec"
+      },
+      "reply": "鲜港达是一款面向中国城市家庭、餐厅小店与办公室团购场景的移动端海鲜配送 App。用户可浏览鱼虾蟹贝、冷冻海产、刺身食材和团购套餐，查看产地、捕捞/到港时间、鲜度等级、检测信息与冷链状态；支持加入购物车、预约配送时段、在线支付、订单冷链追踪、会员权益管理，以及企业采购、多人拼单和企业开票等功能。",
+      "checklist": [
+        "用户画像明确",
+        "15 页路径完整",
+        "下单和追踪闭环成立"
+      ],
+      "nextActions": [
+        "生成 UI 设计稿",
+        "生成页面 HTML"
+      ],
+      "suggestedStatus": "done",
+      "productArtifact": {
+        "audience": "城市家庭、办公室团购、餐饮小店和高频海鲜复购用户",
+        "p0Pages": [
+          "首页",
+          "分类",
+          "今日鲜货",
+          "搜索结果",
+          "商品详情",
+          "套餐组合",
+          "购物车",
+          "结算",
+          "地址管理",
+          "配送时间",
+          "支付成功",
+          "订单列表",
+          "订单追踪",
+          "会员中心",
+          "企业采购"
+        ]
+      },
+      "designArtifact": {
+        "brand": "鲜港达",
+        "tagline": "从源头到餐桌，全程冷链的安心海鲜配送",
+        "palette": [
+          "#006C70",
+          "#0EA5A4",
+          "#F59E0B",
+          "#102033",
+          "#607080",
+          "#F2FAFA"
+        ],
+        "sections": [
+          {
+            "title": "首页",
+            "text": "快速建立全程冷链与源头直采信任，引导用户进入今日鲜货、分类选购、团购专区和会员权益转化。"
+          },
+          {
+            "title": "分类",
+            "text": "帮助用户按品类、场景、鲜度与处理方式快速筛选海鲜商品，提高家庭采购、餐饮备货和企业团购选品效率。"
+          },
+          {
+            "title": "今日鲜货",
+            "text": "集中展示当日到港和当日分拣商品，强化鲜度、到货批次和限时配送时段，促进即时购买与高频复购。"
+          },
+          {
+            "title": "搜索结果",
+            "text": "在用户搜索具体商品、产地或使用场景后，提供高相关商品结果、筛选排序与信任信息，缩短决策路径并提升加购率。"
+          }
+        ],
+        "products": [
+          {
+            "name": "今日鲜到",
+            "price": "¥39.9 起",
+            "tag": "从源头到餐桌"
+          },
+          {
+            "name": "鱼类",
+            "price": "¥68.0 起",
+            "tag": "按品类精准选购"
+          },
+          {
+            "name": "舟山冰鲜带鱼",
+            "price": "¥39.9 起",
+            "tag": "今日到港 · 限时鲜配"
+          },
+          {
+            "name": "三文鱼搜索结果",
+            "price": "¥68.0 起",
+            "tag": "精准搜索"
+          }
+        ]
+      }
+    }
+  ]
+}

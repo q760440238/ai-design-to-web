@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>鲜港达 · 套餐组合</title>
+  <style>
+    :root {
+      --primary: #006C70;
+      --secondary: #0EA5A4;
+      --accent: #F59E0B;
+      --ink: #102033;
+      --muted: #607080;
+      --background: #F2FAFA;
+      --surface: #FFFFFF;
+      --line: #D6E7EA;
+      --success: #138A5B;
+      --danger: #C2410C;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--background);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      padding: 14px 14px 76px;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(14, 165, 164, 0.16), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(242, 250, 250, 0.96) 38%, #fff 100%);
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 42px 1fr 42px;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(16, 32, 51, 0.08);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.88);
+      font-weight: 900;
+    }
+
+    .brand {
+      min-width: 0;
+      text-align: center;
+    }
+
+    .brand strong,
+    .brand span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .brand strong {
+      font-size: 15px;
+    }
+
+    .brand span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin-top: 12px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 10px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(0, 108, 112, 0.96), rgba(14, 165, 164, 0.86)),
+        linear-gradient(45deg, var(--primary), var(--secondary));
+      box-shadow: 0 16px 34px rgba(0, 108, 112, 0.18);
+    }
+
+    .hero.tone-1 {
+      background:
+        linear-gradient(135deg, rgba(16, 32, 51, 0.95), rgba(0, 108, 112, 0.88)),
+        linear-gradient(45deg, var(--primary), var(--secondary));
+    }
+
+    .hero.tone-2 {
+      background:
+        linear-gradient(135deg, rgba(5, 80, 86, 0.94), rgba(245, 158, 11, 0.74)),
+        linear-gradient(45deg, var(--primary), var(--accent));
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      bottom: -52px;
+      width: 170px;
+      height: 170px;
+      border: 28px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      max-width: 100%;
+      padding: 6px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 31em;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 13px;
+      line-height: 1.62;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .hero-actions button {
+      min-height: 38px;
+      padding: 0 13px;
+      border: 0;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .hero-actions button:first-child {
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .hero-actions button:last-child {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .visual-card {
+      position: relative;
+      min-height: 132px;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(222, 247, 246, 0.88)),
+        #fff;
+    }
+
+    .visual-card::before,
+    .visual-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+    }
+
+    .visual-card::before {
+      left: 22px;
+      top: 22px;
+      width: 92px;
+      height: 70px;
+      background:
+        radial-gradient(circle at 34% 40%, rgba(245, 158, 11, 0.92), transparent 18%),
+        linear-gradient(135deg, rgba(0, 108, 112, 0.94), rgba(14, 165, 164, 0.82));
+      box-shadow: 100px 26px 0 -18px rgba(245, 158, 11, 0.76), 148px -4px 0 -24px rgba(0, 108, 112, 0.72);
+      transform: rotate(-8deg);
+    }
+
+    .visual-card::after {
+      right: 28px;
+      bottom: 18px;
+      width: 106px;
+      height: 54px;
+      border: 13px solid rgba(14, 165, 164, 0.2);
+      border-left-color: rgba(245, 158, 11, 0.34);
+      transform: rotate(12deg);
+    }
+
+    .visual-card span {
+      position: absolute;
+      left: 18px;
+      bottom: 15px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      min-width: 0;
+      padding: 11px 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .metric strong,
+    .metric span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .metric strong {
+      color: var(--primary);
+      font-size: 16px;
+    }
+
+    .metric span {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .search {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .search input {
+      min-width: 0;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 13px;
+      background: #fff;
+      color: var(--ink);
+      outline: 0;
+    }
+
+    .search button {
+      width: 74px;
+      border: 0;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--primary);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .section {
+      margin-top: 18px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .section-head span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .card-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .product-card {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 12px;
+      min-width: 0;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(16, 32, 51, 0.06);
+    }
+
+    .thumb {
+      min-height: 78px;
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 36% 38%, rgba(245, 158, 11, 0.88), transparent 20%),
+        linear-gradient(135deg, rgba(0, 108, 112, 0.86), rgba(14, 165, 164, 0.18)),
+        #e7fbfb;
+    }
+
+    .product-card h3,
+    .product-card p {
+      margin: 0;
+    }
+
+    .product-card h3 {
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .product-card p {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.48;
+    }
+
+    .product-meta {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .pill {
+      max-width: 100%;
+      padding: 5px 7px;
+      border-radius: 999px;
+      color: var(--primary);
+      background: rgba(14, 165, 164, 0.1);
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .price {
+      margin-left: auto;
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .info-card {
+      min-width: 0;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .info-card strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    .info-card ul {
+      display: grid;
+      gap: 6px;
+      margin: 9px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .info-card li {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .workflow {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 9px;
+      align-items: start;
+    }
+
+    .step b {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--primary);
+      font-size: 11px;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .side-note {
+      margin-top: 14px;
+      padding: 13px;
+      border: 1px solid rgba(245, 158, 11, 0.28);
+      border-radius: 9px;
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .side-note strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .side-note ul {
+      display: grid;
+      gap: 6px;
+      margin: 8px 0 0;
+      padding-left: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: 12px;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 4px;
+      padding: 7px;
+      border: 1px solid rgba(16, 32, 51, 0.08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 14px 36px rgba(16, 32, 51, 0.14);
+      backdrop-filter: blur(18px);
+    }
+
+    .bottom-nav a {
+      min-width: 0;
+      padding: 8px 4px;
+      border-radius: 8px;
+      color: var(--muted);
+      text-align: center;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .bottom-nav a.is-active {
+      color: #fff;
+      background: var(--primary);
+    }
+
+    @media (min-width: 700px) {
+      .app {
+        max-width: 430px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+      <div class="brand">
+        <strong>鲜港达</strong>
+        <span>套餐组合 · /bundles</span>
+      </div>
+      <button class="icon-btn" type="button" aria-label="消息">••</button>
+    </header>
+
+    <section class="hero tone-2">
+      <div class="hero-content">
+        <span class="eyebrow">精选组合 · 一单配齐</span>
+        <h1>按场景选海鲜套餐，更省心也更划算</h1>
+        <p>覆盖家庭晚餐、办公室拼单、火锅烧烤、刺身小宴和餐饮备货场景。每个套餐均展示产地、鲜度标签、检测记录与预计送达时段。</p>
+        <div class="hero-actions">
+          <button type="button">查看今日推荐套餐</button>
+          <button type="button">按人数筛选</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="visual-card" aria-label="页面主视觉">
+      <span>帮助家庭、办公室与餐饮小店快速选择高匹配度海鲜组合，提升客单价与复购效率，同时突出产地溯源、鲜度等级和冷链履约能力。</span>
+    </section>
+
+    <section class="metrics" aria-label="关键指标">
+      
+      <article class="metric">
+        <strong>最高省 18%</strong>
+        <span>组合优惠</span>
+      </article>
+      <article class="metric">
+        <strong>A 级起售</strong>
+        <span>鲜度标识</span>
+      </article>
+      <article class="metric">
+        <strong>0-4℃ / -18℃</strong>
+        <span>冷链温控</span>
+      </article>
+    </section>
+
+    <form class="search">
+      <input aria-label="搜索" value="搜索鲜虾、贝类、刺身、火锅套餐">
+      <button type="button">筛选</button>
+    </form>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>当前推荐</h2>
+        <span>查看全部</span>
+      </div>
+      <div class="card-list">
+        
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>三口之家鲜活晚餐</h3>
+            <p>含舟山小黄鱼、湛江白虾、乳山生蚝与时令贝类，适合 2-3 人一餐搭配。商品卡展示捕捞/到港时间、规格重量与建议做法。</p>
+            <div class="product-meta">
+              <span class="pill">预计今日 18:00-20:00 送达 · 会员价 ¥168</span>
+              <strong class="price">¥68.0</strong>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>办公室 8 人拼单海鲜盘</h3>
+            <p>包含去虾线白虾、半壳扇贝、蟹柳拼盘和冷冻鳕鱼块，支持多人分别付款、统一配送与发票申请。</p>
+            <div class="product-meta">
+              <span class="pill">支持企业采购 · 满 ¥499 免配送费</span>
+              <strong class="price">¥77.0</strong>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>餐饮小店高频备货包</h3>
+            <p>精选规格稳定的冻虾仁、巴沙鱼片、鱿鱼须和贝柱，适合小店日常出餐。可查看批次检测、温区记录与箱规信息。</p>
+            <div class="product-meta">
+              <span class="pill">B 端专享 · 可开专票 · 次日达</span>
+              <strong class="price">¥86.0</strong>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>套餐筛选能力</h2>
+        <span>冷链可信</span>
+      </div>
+      <div class="info-grid">
+        
+        <article class="info-card">
+          <strong>套餐筛选能力</strong>
+          <ul>
+            <li>按用餐人数筛选：1-2 人、3-5 人、6-10 人、10 人以上团购</li><li>按使用场景筛选：家常快手菜、火锅烧烤、刺身料理、餐饮备货</li><li>按鲜度标签筛选：鲜活、冰鲜、冷冻、刺身级、到港 24 小时内</li>
+          </ul>
+        </article>
+        <article class="info-card">
+          <strong>安心信息展示</strong>
+          <ul>
+            <li>每个套餐聚合展示主商品产地、捕捞/到港时间与批次编号</li><li>展示第三方检测结果、重金属/微生物检测摘要和可追溯凭证</li><li>明确冷链温区、出库时间、预计送达时段与异常补偿规则</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>完成路径</h2>
+        <span>精选组合 · 一单配齐</span>
+      </div>
+      <div class="workflow">
+        
+        <div class="step">
+          <b>1</b>
+          <span>选择用餐人数与场景</span>
+        </div>
+        <div class="step">
+          <b>2</b>
+          <span>查看套餐明细、鲜度标签与溯源信息</span>
+        </div>
+        <div class="step">
+          <b>3</b>
+          <span>加入购物车并选择配送时段</span>
+        </div>
+        <div class="step">
+          <b>4</b>
+          <span>完成支付</span>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <aside class="side-note">
+      <strong>套餐购买提示</strong>
+      <ul>
+        <li>会员可叠加组合优惠券与免运权益</li><li>企业采购可选择对公支付和发票抬头</li><li>签收后如发现化冻异常或缺斤少两，可在 24 小时内申请售后</li>
+      </ul>
+    </aside>
+  </main>
+
+  <nav class="bottom-nav" aria-label="主导航">
+    
+    <a class="" href="/">首页</a>
+    <a class="" href="/categories">分类</a>
+    <a class="" href="/cart">购物车</a>
+    <a class="" href="/orders">订单</a>
+    <a class="" href="/profile">我的</a>
+  </nav>
+</body>
+</html>

@@ -1,0 +1,157 @@
+{
+  "requestedCount": 15,
+  "generatedCount": 0,
+  "summary": "本次 15 页 HTML 已生成；切图资产已按页面规划好 image2 提示词，可继续批量调用图生图 Agent。",
+  "assets": [
+    {
+      "id": "asset-01",
+      "fileName": "home-visual.png",
+      "purpose": "首页页面的核心海鲜视觉资产",
+      "size": "1024x1024",
+      "transparent": true,
+      "status": "planned",
+      "webPath": "/assets/home-visual.png",
+      "prompt": "为鲜港达的首页页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：全程冷链的安心海鲜配送。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    },
+    {
+      "id": "asset-02",
+      "fileName": "categories-visual.png",
+      "purpose": "分类页面的核心海鲜视觉资产",
+      "size": "1536x1024",
+      "transparent": false,
+      "status": "planned",
+      "webPath": "/assets/categories-visual.png",
+      "prompt": "为鲜港达的分类页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：鱼虾蟹贝、刺身冷冻一站配齐。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    },
+    {
+      "id": "asset-03",
+      "fileName": "fresh-today-visual.png",
+      "purpose": "今日鲜货页面的核心海鲜视觉资产",
+      "size": "1024x1536",
+      "transparent": false,
+      "status": "planned",
+      "webPath": "/assets/fresh-today-visual.png",
+      "prompt": "为鲜港达的今日鲜货页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：当天鲜货，按时送上桌。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    },
+    {
+      "id": "asset-04",
+      "fileName": "search-visual.png",
+      "purpose": "搜索结果页面的核心海鲜视觉资产",
+      "size": "1024x1024",
+      "transparent": false,
+      "status": "planned",
+      "webPath": "/assets/search-visual.png",
+      "prompt": "为鲜港达的搜索结果页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：找到符合鲜度、产地和送达时间的海鲜。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    },
+    {
+      "id": "asset-05",
+      "fileName": "product-detail-visual.png",
+      "purpose": "商品详情页面的核心海鲜视觉资产",
+      "size": "1536x1024",
+      "transparent": true,
+      "status": "planned",
+      "webPath": "/assets/product-detail-visual.png",
+      "prompt": "为鲜港达的商品详情页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：挪威三文鱼刺身段 300g。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    },
+    {
+      "id": "asset-06",
+      "fileName": "bundles-visual.png",
+      "purpose": "套餐组合页面的核心海鲜视觉资产",
+      "size": "1024x1536",
+      "transparent": false,
+      "status": "planned",
+      "webPath": "/assets/bundles-visual.png",
+      "prompt": "为鲜港达的套餐组合页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：按场景选海鲜套餐，更省心也更划算。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    },
+    {
+      "id": "asset-07",
+      "fileName": "cart-visual.png",
+      "purpose": "购物车页面的核心海鲜视觉资产",
+      "size": "1024x1024",
+      "transparent": false,
+      "status": "planned",
+      "webPath": "/assets/cart-visual.png",
+      "prompt": "为鲜港达的购物车页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：购物车里先看鲜度、温区和送达风险。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    },
+    {
+      "id": "asset-08",
+      "fileName": "checkout-visual.png",
+      "purpose": "结算页面的核心海鲜视觉资产",
+      "size": "1536x1024",
+      "transparent": false,
+      "status": "planned",
+      "webPath": "/assets/checkout-visual.png",
+      "prompt": "为鲜港达的结算页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：提交前确认每一份海鲜的来源、温区与到达时间。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    },
+    {
+      "id": "asset-09",
+      "fileName": "addresses-visual.png",
+      "purpose": "地址管理页面的核心海鲜视觉资产",
+      "size": "1024x1536",
+      "transparent": true,
+      "status": "planned",
+      "webPath": "/assets/addresses-visual.png",
+      "prompt": "为鲜港达的地址管理页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：为家庭餐桌、办公室团购和门店备货保存常用地址。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    },
+    {
+      "id": "asset-10",
+      "fileName": "delivery-slots-visual.png",
+      "purpose": "配送时间页面的核心海鲜视觉资产",
+      "size": "1024x1024",
+      "transparent": false,
+      "status": "planned",
+      "webPath": "/assets/delivery-slots-visual.png",
+      "prompt": "为鲜港达的配送时间页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：按海鲜温区和食用计划选择最合适的送达时间。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    },
+    {
+      "id": "asset-11",
+      "fileName": "payment-success-visual.png",
+      "purpose": "支付成功页面的核心海鲜视觉资产",
+      "size": "1536x1024",
+      "transparent": false,
+      "status": "planned",
+      "webPath": "/assets/payment-success-visual.png",
+      "prompt": "为鲜港达的支付成功页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：支付成功，鲜港达已开始为你备货。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    },
+    {
+      "id": "asset-12",
+      "fileName": "orders-visual.png",
+      "purpose": "订单列表页面的核心海鲜视觉资产",
+      "size": "1024x1536",
+      "transparent": false,
+      "status": "planned",
+      "webPath": "/assets/orders-visual.png",
+      "prompt": "为鲜港达的订单列表页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：按状态管理每一笔鲜到配送。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    },
+    {
+      "id": "asset-13",
+      "fileName": "order-tracking-visual.png",
+      "purpose": "订单追踪页面的核心海鲜视觉资产",
+      "size": "1024x1024",
+      "transparent": true,
+      "status": "planned",
+      "webPath": "/assets/order-tracking-visual.png",
+      "prompt": "为鲜港达的订单追踪页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：你的海鲜正在 0-4℃ 温区配送中。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    },
+    {
+      "id": "asset-14",
+      "fileName": "profile-visual.png",
+      "purpose": "会员中心页面的核心海鲜视觉资产",
+      "size": "1536x1024",
+      "transparent": false,
+      "status": "planned",
+      "webPath": "/assets/profile-visual.png",
+      "prompt": "为鲜港达的会员中心页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：安心复购，从你的专属鲜度档案开始。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    },
+    {
+      "id": "asset-15",
+      "fileName": "business-visual.png",
+      "purpose": "企业采购页面的核心海鲜视觉资产",
+      "size": "1024x1536",
+      "transparent": false,
+      "status": "planned",
+      "webPath": "/assets/business-visual.png",
+      "prompt": "为鲜港达的企业采购页面生成高端、真实、干净的海鲜配送 App 视觉资产。主题：为餐厅、办公室和企业福利提供稳定海鲜供应。要求：鲜活海产、冷链可信赖、移动电商可用，不包含 UI 文字，不生成按钮和表单。"
+    }
+  ]
+}

@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>鲜港达 · 搜索结果</title>
+  <style>
+    :root {
+      --primary: #006C70;
+      --secondary: #0EA5A4;
+      --accent: #F59E0B;
+      --ink: #102033;
+      --muted: #607080;
+      --background: #F2FAFA;
+      --surface: #FFFFFF;
+      --line: #D6E7EA;
+      --success: #138A5B;
+      --danger: #C2410C;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--background);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      padding: 14px 14px 76px;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(14, 165, 164, 0.16), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(242, 250, 250, 0.96) 38%, #fff 100%);
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 42px 1fr 42px;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(16, 32, 51, 0.08);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.88);
+      font-weight: 900;
+    }
+
+    .brand {
+      min-width: 0;
+      text-align: center;
+    }
+
+    .brand strong,
+    .brand span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .brand strong {
+      font-size: 15px;
+    }
+
+    .brand span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin-top: 12px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 10px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(0, 108, 112, 0.96), rgba(14, 165, 164, 0.86)),
+        linear-gradient(45deg, var(--primary), var(--secondary));
+      box-shadow: 0 16px 34px rgba(0, 108, 112, 0.18);
+    }
+
+    .hero.tone-1 {
+      background:
+        linear-gradient(135deg, rgba(16, 32, 51, 0.95), rgba(0, 108, 112, 0.88)),
+        linear-gradient(45deg, var(--primary), var(--secondary));
+    }
+
+    .hero.tone-2 {
+      background:
+        linear-gradient(135deg, rgba(5, 80, 86, 0.94), rgba(245, 158, 11, 0.74)),
+        linear-gradient(45deg, var(--primary), var(--accent));
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      bottom: -52px;
+      width: 170px;
+      height: 170px;
+      border: 28px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      max-width: 100%;
+      padding: 6px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 31em;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 13px;
+      line-height: 1.62;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .hero-actions button {
+      min-height: 38px;
+      padding: 0 13px;
+      border: 0;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .hero-actions button:first-child {
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .hero-actions button:last-child {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .visual-card {
+      position: relative;
+      min-height: 132px;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(222, 247, 246, 0.88)),
+        #fff;
+    }
+
+    .visual-card::before,
+    .visual-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+    }
+
+    .visual-card::before {
+      left: 22px;
+      top: 22px;
+      width: 92px;
+      height: 70px;
+      background:
+        radial-gradient(circle at 34% 40%, rgba(245, 158, 11, 0.92), transparent 18%),
+        linear-gradient(135deg, rgba(0, 108, 112, 0.94), rgba(14, 165, 164, 0.82));
+      box-shadow: 100px 26px 0 -18px rgba(245, 158, 11, 0.76), 148px -4px 0 -24px rgba(0, 108, 112, 0.72);
+      transform: rotate(-8deg);
+    }
+
+    .visual-card::after {
+      right: 28px;
+      bottom: 18px;
+      width: 106px;
+      height: 54px;
+      border: 13px solid rgba(14, 165, 164, 0.2);
+      border-left-color: rgba(245, 158, 11, 0.34);
+      transform: rotate(12deg);
+    }
+
+    .visual-card span {
+      position: absolute;
+      left: 18px;
+      bottom: 15px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      min-width: 0;
+      padding: 11px 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .metric strong,
+    .metric span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .metric strong {
+      color: var(--primary);
+      font-size: 16px;
+    }
+
+    .metric span {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .search {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .search input {
+      min-width: 0;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 13px;
+      background: #fff;
+      color: var(--ink);
+      outline: 0;
+    }
+
+    .search button {
+      width: 74px;
+      border: 0;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--primary);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .section {
+      margin-top: 18px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .section-head span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .card-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .product-card {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 12px;
+      min-width: 0;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(16, 32, 51, 0.06);
+    }
+
+    .thumb {
+      min-height: 78px;
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 36% 38%, rgba(245, 158, 11, 0.88), transparent 20%),
+        linear-gradient(135deg, rgba(0, 108, 112, 0.86), rgba(14, 165, 164, 0.18)),
+        #e7fbfb;
+    }
+
+    .product-card h3,
+    .product-card p {
+      margin: 0;
+    }
+
+    .product-card h3 {
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .product-card p {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.48;
+    }
+
+    .product-meta {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .pill {
+      max-width: 100%;
+      padding: 5px 7px;
+      border-radius: 999px;
+      color: var(--primary);
+      background: rgba(14, 165, 164, 0.1);
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .price {
+      margin-left: auto;
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .info-card {
+      min-width: 0;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .info-card strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    .info-card ul {
+      display: grid;
+      gap: 6px;
+      margin: 9px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .info-card li {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .workflow {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 9px;
+      align-items: start;
+    }
+
+    .step b {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--primary);
+      font-size: 11px;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .side-note {
+      margin-top: 14px;
+      padding: 13px;
+      border: 1px solid rgba(245, 158, 11, 0.28);
+      border-radius: 9px;
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .side-note strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .side-note ul {
+      display: grid;
+      gap: 6px;
+      margin: 8px 0 0;
+      padding-left: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: 12px;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 4px;
+      padding: 7px;
+      border: 1px solid rgba(16, 32, 51, 0.08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 14px 36px rgba(16, 32, 51, 0.14);
+      backdrop-filter: blur(18px);
+    }
+
+    .bottom-nav a {
+      min-width: 0;
+      padding: 8px 4px;
+      border-radius: 8px;
+      color: var(--muted);
+      text-align: center;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .bottom-nav a.is-active {
+      color: #fff;
+      background: var(--primary);
+    }
+
+    @media (min-width: 700px) {
+      .app {
+        max-width: 430px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+      <div class="brand">
+        <strong>鲜港达</strong>
+        <span>搜索结果 · /search</span>
+      </div>
+      <button class="icon-btn" type="button" aria-label="消息">••</button>
+    </header>
+
+    <section class="hero tone-0">
+      <div class="hero-content">
+        <span class="eyebrow">精准搜索</span>
+        <h1>找到符合鲜度、产地和送达时间的海鲜</h1>
+        <p>搜索结果支持按鲜度等级、产地、价格、规格、冷链温区和配送时段筛选。商品卡直接展示检测、溯源与售后保障入口。</p>
+        <div class="hero-actions">
+          <button type="button">筛选可送达商品</button>
+          <button type="button">查看常购清单</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="visual-card" aria-label="页面主视觉">
+      <span>在用户搜索具体商品、产地或使用场景后，提供高相关商品结果、筛选排序与信任信息，缩短决策路径并提升加购率。</span>
+    </section>
+
+    <section class="metrics" aria-label="关键指标">
+      
+      <article class="metric">
+        <strong>12类</strong>
+        <span>搜索筛选项</span>
+      </article>
+      <article class="metric">
+        <strong>鲜度/产地/温区</strong>
+        <span>结果信息字段</span>
+      </article>
+      <article class="metric">
+        <strong>列表直达</strong>
+        <span>加购入口</span>
+      </article>
+    </section>
+
+    <form class="search">
+      <input aria-label="搜索" value="三文鱼 刺身 当日达">
+      <button type="button">筛选</button>
+    </form>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>当前推荐</h2>
+        <span>查看全部</span>
+      </div>
+      <div class="card-list">
+        
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>三文鱼搜索结果</h3>
+            <p>优先展示刺身级、到港现切、家庭装和餐饮装，并标注挪威、智利等产地与检测批次。</p>
+            <div class="product-meta">
+              <span class="pill">支持按克重与切片服务筛选</span>
+              <strong class="price">¥64.0</strong>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>生蚝搜索结果</h3>
+            <p>展示净化检测、规格只数、产地海域和冷藏配送方式，适合家庭聚餐或办公室拼单。</p>
+            <div class="product-meta">
+              <span class="pill">可筛选开蚝工具与调料套装</span>
+              <strong class="price">¥73.0</strong>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>企业采购结果</h3>
+            <p>搜索虾仁、鱼排、贝柱等后厨常用品时，突出箱装规格、阶梯价、发票和月结服务。</p>
+            <div class="product-meta">
+              <span class="pill">适合餐厅小店集中备货</span>
+              <strong class="price">¥82.0</strong>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>搜索结果筛选</h2>
+        <span>冷链可信</span>
+      </div>
+      <div class="info-grid">
+        
+        <article class="info-card">
+          <strong>搜索结果筛选</strong>
+          <ul>
+            <li>按配送能力筛选：今日可达、次日达、预约送达、团购统一配送</li><li>按品质信息筛选：鲜度 A 级、刺身级、检测已完成、产地可溯源</li><li>按价格规格筛选：家庭小份、餐饮箱装、会员价、满减活动</li>
+          </ul>
+        </article>
+        <article class="info-card">
+          <strong>搜索结果展示规范</strong>
+          <ul>
+            <li>商品卡首行显示品名、规格和鲜度标签，避免过度促销文案干扰</li><li>价格区显示每份价与折算斤价，帮助家庭和餐饮用户比较成本</li><li>结果为空时推荐相近品类、到货提醒和企业采购人工询价</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>完成路径</h2>
+        <span>精准搜索</span>
+      </div>
+      <div class="workflow">
+        
+        <div class="step">
+          <b>1</b>
+          <span>输入海鲜名称、产地、规格或采购场景</span>
+        </div>
+        <div class="step">
+          <b>2</b>
+          <span>使用筛选项锁定鲜度、温区、价格和配送时段</span>
+        </div>
+        <div class="step">
+          <b>3</b>
+          <span>在列表中查看溯源摘要并直接加购或进入详情页</span>
+        </div>
+        <div class="step">
+          <b>4</b>
+          <span>完成支付</span>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <aside class="side-note">
+      <strong>搜索辅助服务</strong>
+      <ul>
+        <li>热门搜索：三文鱼刺身、生蚝、黑虎虾、梭子蟹</li><li>采购建议：餐饮用户可保存搜索条件为常购模板</li><li>会员权益：搜索结果中优先显示会员专享价和免运商品</li>
+      </ul>
+    </aside>
+  </main>
+
+  <nav class="bottom-nav" aria-label="主导航">
+    
+    <a class="" href="/">首页</a>
+    <a class="" href="/categories">分类</a>
+    <a class="" href="/cart">购物车</a>
+    <a class="" href="/orders">订单</a>
+    <a class="" href="/profile">我的</a>
+  </nav>
+</body>
+</html>

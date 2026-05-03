@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>鲜港达 · 企业采购</title>
+  <style>
+    :root {
+      --primary: #006C70;
+      --secondary: #0EA5A4;
+      --accent: #F59E0B;
+      --ink: #102033;
+      --muted: #607080;
+      --background: #F2FAFA;
+      --surface: #FFFFFF;
+      --line: #D6E7EA;
+      --success: #138A5B;
+      --danger: #C2410C;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--background);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      padding: 14px 14px 76px;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(14, 165, 164, 0.16), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(242, 250, 250, 0.96) 38%, #fff 100%);
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 42px 1fr 42px;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(16, 32, 51, 0.08);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.88);
+      font-weight: 900;
+    }
+
+    .brand {
+      min-width: 0;
+      text-align: center;
+    }
+
+    .brand strong,
+    .brand span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .brand strong {
+      font-size: 15px;
+    }
+
+    .brand span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin-top: 12px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 10px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(0, 108, 112, 0.96), rgba(14, 165, 164, 0.86)),
+        linear-gradient(45deg, var(--primary), var(--secondary));
+      box-shadow: 0 16px 34px rgba(0, 108, 112, 0.18);
+    }
+
+    .hero.tone-1 {
+      background:
+        linear-gradient(135deg, rgba(16, 32, 51, 0.95), rgba(0, 108, 112, 0.88)),
+        linear-gradient(45deg, var(--primary), var(--secondary));
+    }
+
+    .hero.tone-2 {
+      background:
+        linear-gradient(135deg, rgba(5, 80, 86, 0.94), rgba(245, 158, 11, 0.74)),
+        linear-gradient(45deg, var(--primary), var(--accent));
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      bottom: -52px;
+      width: 170px;
+      height: 170px;
+      border: 28px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      max-width: 100%;
+      padding: 6px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 31em;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 13px;
+      line-height: 1.62;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .hero-actions button {
+      min-height: 38px;
+      padding: 0 13px;
+      border: 0;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .hero-actions button:first-child {
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .hero-actions button:last-child {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .visual-card {
+      position: relative;
+      min-height: 132px;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(222, 247, 246, 0.88)),
+        #fff;
+    }
+
+    .visual-card::before,
+    .visual-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+    }
+
+    .visual-card::before {
+      left: 22px;
+      top: 22px;
+      width: 92px;
+      height: 70px;
+      background:
+        radial-gradient(circle at 34% 40%, rgba(245, 158, 11, 0.92), transparent 18%),
+        linear-gradient(135deg, rgba(0, 108, 112, 0.94), rgba(14, 165, 164, 0.82));
+      box-shadow: 100px 26px 0 -18px rgba(245, 158, 11, 0.76), 148px -4px 0 -24px rgba(0, 108, 112, 0.72);
+      transform: rotate(-8deg);
+    }
+
+    .visual-card::after {
+      right: 28px;
+      bottom: 18px;
+      width: 106px;
+      height: 54px;
+      border: 13px solid rgba(14, 165, 164, 0.2);
+      border-left-color: rgba(245, 158, 11, 0.34);
+      transform: rotate(12deg);
+    }
+
+    .visual-card span {
+      position: absolute;
+      left: 18px;
+      bottom: 15px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      min-width: 0;
+      padding: 11px 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .metric strong,
+    .metric span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .metric strong {
+      color: var(--primary);
+      font-size: 16px;
+    }
+
+    .metric span {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .search {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .search input {
+      min-width: 0;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 13px;
+      background: #fff;
+      color: var(--ink);
+      outline: 0;
+    }
+
+    .search button {
+      width: 74px;
+      border: 0;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--primary);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .section {
+      margin-top: 18px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .section-head span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .card-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .product-card {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 12px;
+      min-width: 0;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(16, 32, 51, 0.06);
+    }
+
+    .thumb {
+      min-height: 78px;
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 36% 38%, rgba(245, 158, 11, 0.88), transparent 20%),
+        linear-gradient(135deg, rgba(0, 108, 112, 0.86), rgba(14, 165, 164, 0.18)),
+        #e7fbfb;
+    }
+
+    .product-card h3,
+    .product-card p {
+      margin: 0;
+    }
+
+    .product-card h3 {
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .product-card p {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.48;
+    }
+
+    .product-meta {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .pill {
+      max-width: 100%;
+      padding: 5px 7px;
+      border-radius: 999px;
+      color: var(--primary);
+      background: rgba(14, 165, 164, 0.1);
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .price {
+      margin-left: auto;
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .info-card {
+      min-width: 0;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .info-card strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    .info-card ul {
+      display: grid;
+      gap: 6px;
+      margin: 9px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .info-card li {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .workflow {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 9px;
+      align-items: start;
+    }
+
+    .step b {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--primary);
+      font-size: 11px;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .side-note {
+      margin-top: 14px;
+      padding: 13px;
+      border: 1px solid rgba(245, 158, 11, 0.28);
+      border-radius: 9px;
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .side-note strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .side-note ul {
+      display: grid;
+      gap: 6px;
+      margin: 8px 0 0;
+      padding-left: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: 12px;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 4px;
+      padding: 7px;
+      border: 1px solid rgba(16, 32, 51, 0.08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 14px 36px rgba(16, 32, 51, 0.14);
+      backdrop-filter: blur(18px);
+    }
+
+    .bottom-nav a {
+      min-width: 0;
+      padding: 8px 4px;
+      border-radius: 8px;
+      color: var(--muted);
+      text-align: center;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .bottom-nav a.is-active {
+      color: #fff;
+      background: var(--primary);
+    }
+
+    @media (min-width: 700px) {
+      .app {
+        max-width: 430px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+      <div class="brand">
+        <strong>鲜港达</strong>
+        <span>企业采购 · /business</span>
+      </div>
+      <button class="icon-btn" type="button" aria-label="消息">••</button>
+    </header>
+
+    <section class="hero tone-2">
+      <div class="hero-content">
+        <span class="eyebrow">企业与团购服务</span>
+        <h1>为餐厅、办公室和企业福利提供稳定海鲜供应</h1>
+        <p>支持批量采购、多人拼单、按部门分装、企业开票和固定配送时段。所有企业订单同样提供产地溯源、检测记录与冷链温区追踪。</p>
+        <div class="hero-actions">
+          <button type="button">提交采购需求</button>
+          <button type="button">发起多人拼单</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="visual-card" aria-label="页面主视觉">
+      <span>服务餐厅小店、办公室团购与企业福利采购，提供批量选品、多人拼单、企业开票、配送时段和稳定供货方案。</span>
+    </section>
+
+    <section class="metrics" aria-label="关键指标">
+      
+      <article class="metric">
+        <strong>3200+</strong>
+        <span>企业客户</span>
+      </article>
+      <article class="metric">
+        <strong>97.9%</strong>
+        <span>团购准时率</span>
+      </article>
+      <article class="metric">
+        <strong>企业普票</strong>
+        <span>支持开票</span>
+      </article>
+    </section>
+
+    <form class="search">
+      <input aria-label="搜索" value="输入企业采购需求">
+      <button type="button">筛选</button>
+    </form>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>当前推荐</h2>
+        <span>查看全部</span>
+      </div>
+      <div class="card-list">
+        
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>餐厅小店周采方案</h3>
+            <p>可按菜单结构配置鱼虾蟹贝、刺身食材和冷冻海产的周采清单，支持固定规格、稳定批次与缺货替换规则。</p>
+            <div class="product-meta">
+              <span class="pill">适合日料店、海鲜排档、社区餐饮</span>
+              <strong class="price">¥81.9</strong>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>办公室多人拼单</h3>
+            <p>员工各自选品付款，系统自动合并配送并按姓名分袋，管理员可查看汇总明细和配送进度。</p>
+            <div class="product-meta">
+              <span class="pill">支持 5-80 人拼单 · 分袋标签</span>
+              <strong class="price">¥88.9</strong>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>企业福利礼包</h3>
+            <p>提供节日海鲜礼盒、家庭火锅套餐和刺身组合，可配置预算档位、收货城市和冷链配送日期。</p>
+            <div class="product-meta">
+              <span class="pill">支持批量地址导入 · 统一开票</span>
+              <strong class="price">¥95.9</strong>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>企业采购能力</h2>
+        <span>冷链可信</span>
+      </div>
+      <div class="info-grid">
+        
+        <article class="info-card">
+          <strong>企业采购能力</strong>
+          <ul>
+            <li>支持按重量、箱规、份数和预算生成采购清单，适配后厨备货与员工福利场景。</li><li>关键商品展示产地、到港时间、鲜度等级、检测报告和建议处理方式，方便采购审核。</li><li>大宗订单可预约分批配送，减少仓储压力并保证签收时的商品状态。</li>
+          </ul>
+        </article>
+        <article class="info-card">
+          <strong>结算与履约服务</strong>
+          <ul>
+            <li>支持企业普票申请，订单完成后可按单开票或按月汇总开票。</li><li>企业管理员可设置参与人、预算上限、收货地址和拼单截止时间。</li><li>配送全程记录冷链温区，出现超温、延误或缺货时由专属客服协调补发、退款或替换。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>完成路径</h2>
+        <span>企业与团购服务</span>
+      </div>
+      <div class="workflow">
+        
+        <div class="step">
+          <b>1</b>
+          <span>提交采购需求</span>
+        </div>
+        <div class="step">
+          <b>2</b>
+          <span>配置商品与预算</span>
+        </div>
+        <div class="step">
+          <b>3</b>
+          <span>成员拼单或批量下单</span>
+        </div>
+        <div class="step">
+          <b>4</b>
+          <span>仓内分拣分袋</span>
+        </div>
+        <div class="step">
+          <b>5</b>
+          <span>冷链配送签收</span>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <aside class="side-note">
+      <strong>采购咨询信息</strong>
+      <ul>
+        <li>最快 2 小时内由企业采购顾问联系确认需求</li><li>支持固定周配、临时团购和节日福利三类合作模式</li><li>建议提前 1-3 天提交大宗刺身与鲜活商品需求</li>
+      </ul>
+    </aside>
+  </main>
+
+  <nav class="bottom-nav" aria-label="主导航">
+    
+    <a class="" href="/">首页</a>
+    <a class="" href="/categories">分类</a>
+    <a class="" href="/cart">购物车</a>
+    <a class="" href="/orders">订单</a>
+    <a class="" href="/profile">我的</a>
+  </nav>
+</body>
+</html>

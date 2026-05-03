@@ -1,0 +1,682 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>鲜港达 · 会员中心</title>
+  <style>
+    :root {
+      --primary: #006C70;
+      --secondary: #0EA5A4;
+      --accent: #F59E0B;
+      --ink: #102033;
+      --muted: #607080;
+      --background: #F2FAFA;
+      --surface: #FFFFFF;
+      --line: #D6E7EA;
+      --success: #138A5B;
+      --danger: #C2410C;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--background);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      padding: 14px 14px 76px;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(14, 165, 164, 0.16), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(242, 250, 250, 0.96) 38%, #fff 100%);
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 42px 1fr 42px;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(16, 32, 51, 0.08);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.88);
+      font-weight: 900;
+    }
+
+    .brand {
+      min-width: 0;
+      text-align: center;
+    }
+
+    .brand strong,
+    .brand span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .brand strong {
+      font-size: 15px;
+    }
+
+    .brand span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin-top: 12px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 10px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(0, 108, 112, 0.96), rgba(14, 165, 164, 0.86)),
+        linear-gradient(45deg, var(--primary), var(--secondary));
+      box-shadow: 0 16px 34px rgba(0, 108, 112, 0.18);
+    }
+
+    .hero.tone-1 {
+      background:
+        linear-gradient(135deg, rgba(16, 32, 51, 0.95), rgba(0, 108, 112, 0.88)),
+        linear-gradient(45deg, var(--primary), var(--secondary));
+    }
+
+    .hero.tone-2 {
+      background:
+        linear-gradient(135deg, rgba(5, 80, 86, 0.94), rgba(245, 158, 11, 0.74)),
+        linear-gradient(45deg, var(--primary), var(--accent));
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      bottom: -52px;
+      width: 170px;
+      height: 170px;
+      border: 28px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      max-width: 100%;
+      padding: 6px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 31em;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 13px;
+      line-height: 1.62;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .hero-actions button {
+      min-height: 38px;
+      padding: 0 13px;
+      border: 0;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .hero-actions button:first-child {
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .hero-actions button:last-child {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .visual-card {
+      position: relative;
+      min-height: 132px;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(222, 247, 246, 0.88)),
+        #fff;
+    }
+
+    .visual-card::before,
+    .visual-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+    }
+
+    .visual-card::before {
+      left: 22px;
+      top: 22px;
+      width: 92px;
+      height: 70px;
+      background:
+        radial-gradient(circle at 34% 40%, rgba(245, 158, 11, 0.92), transparent 18%),
+        linear-gradient(135deg, rgba(0, 108, 112, 0.94), rgba(14, 165, 164, 0.82));
+      box-shadow: 100px 26px 0 -18px rgba(245, 158, 11, 0.76), 148px -4px 0 -24px rgba(0, 108, 112, 0.72);
+      transform: rotate(-8deg);
+    }
+
+    .visual-card::after {
+      right: 28px;
+      bottom: 18px;
+      width: 106px;
+      height: 54px;
+      border: 13px solid rgba(14, 165, 164, 0.2);
+      border-left-color: rgba(245, 158, 11, 0.34);
+      transform: rotate(12deg);
+    }
+
+    .visual-card span {
+      position: absolute;
+      left: 18px;
+      bottom: 15px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      min-width: 0;
+      padding: 11px 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .metric strong,
+    .metric span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .metric strong {
+      color: var(--primary);
+      font-size: 16px;
+    }
+
+    .metric span {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .search {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .search input {
+      min-width: 0;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 13px;
+      background: #fff;
+      color: var(--ink);
+      outline: 0;
+    }
+
+    .search button {
+      width: 74px;
+      border: 0;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--primary);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .section {
+      margin-top: 18px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .section-head span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .card-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .product-card {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 12px;
+      min-width: 0;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(16, 32, 51, 0.06);
+    }
+
+    .thumb {
+      min-height: 78px;
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 36% 38%, rgba(245, 158, 11, 0.88), transparent 20%),
+        linear-gradient(135deg, rgba(0, 108, 112, 0.86), rgba(14, 165, 164, 0.18)),
+        #e7fbfb;
+    }
+
+    .product-card h3,
+    .product-card p {
+      margin: 0;
+    }
+
+    .product-card h3 {
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .product-card p {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.48;
+    }
+
+    .product-meta {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .pill {
+      max-width: 100%;
+      padding: 5px 7px;
+      border-radius: 999px;
+      color: var(--primary);
+      background: rgba(14, 165, 164, 0.1);
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .price {
+      margin-left: auto;
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .info-card {
+      min-width: 0;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .info-card strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    .info-card ul {
+      display: grid;
+      gap: 6px;
+      margin: 9px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .info-card li {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .workflow {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 9px;
+      align-items: start;
+    }
+
+    .step b {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--primary);
+      font-size: 11px;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .side-note {
+      margin-top: 14px;
+      padding: 13px;
+      border: 1px solid rgba(245, 158, 11, 0.28);
+      border-radius: 9px;
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .side-note strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .side-note ul {
+      display: grid;
+      gap: 6px;
+      margin: 8px 0 0;
+      padding-left: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: 12px;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 4px;
+      padding: 7px;
+      border: 1px solid rgba(16, 32, 51, 0.08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 14px 36px rgba(16, 32, 51, 0.14);
+      backdrop-filter: blur(18px);
+    }
+
+    .bottom-nav a {
+      min-width: 0;
+      padding: 8px 4px;
+      border-radius: 8px;
+      color: var(--muted);
+      text-align: center;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .bottom-nav a.is-active {
+      color: #fff;
+      background: var(--primary);
+    }
+
+    @media (min-width: 700px) {
+      .app {
+        max-width: 430px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+      <div class="brand">
+        <strong>鲜港达</strong>
+        <span>会员中心 · /profile</span>
+      </div>
+      <button class="icon-btn" type="button" aria-label="消息">••</button>
+    </header>
+
+    <section class="hero tone-1">
+      <div class="hero-content">
+        <span class="eyebrow">鲜港达会员</span>
+        <h1>安心复购，从你的专属鲜度档案开始</h1>
+        <p>会员中心记录家庭常买规格、餐厅采购偏好、配送地址和售后保障。等级越高，可享更多冷链配送、专属客服和团购权益。</p>
+        <div class="hero-actions">
+          <button type="button">查看会员权益</button>
+          <button type="button">管理常购清单</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="visual-card" aria-label="页面主视觉">
+      <span>集中展示用户会员等级、权益、常购偏好、优惠券、发票与售后记录，提升高频复购和信任服务感知。</span>
+    </section>
+
+    <section class="metrics" aria-label="关键指标">
+      
+      <article class="metric">
+        <strong>深海金卡</strong>
+        <span>会员等级</span>
+      </article>
+      <article class="metric">
+        <strong>¥126.50</strong>
+        <span>本月节省</span>
+      </article>
+      <article class="metric">
+        <strong>5 张</strong>
+        <span>可用优惠券</span>
+      </article>
+    </section>
+
+    <form class="search">
+      <input aria-label="搜索" value="搜索鲜虾、贝类、刺身、火锅套餐">
+      <button type="button">筛选</button>
+    </form>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>会员权益</h2>
+        <span>查看全部</span>
+      </div>
+      <div class="card-list">
+        
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>我的鲜度偏好</h3>
+            <p>系统根据近 30 天订单记录，优先推荐 A级鲜到、低刺鱼段、去壳虾仁和适合儿童餐的低腥处理服务。</p>
+            <div class="product-meta">
+              <span class="pill">家庭偏好 · 可编辑</span>
+              <strong class="price">¥84.0</strong>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>会员配送权益</h3>
+            <p>深海金卡每月享 4 次满额免冷链配送费，配送中温区异常可优先客服介入。</p>
+            <div class="product-meta">
+              <span class="pill">剩余免配 2 次 · 本月有效</span>
+              <strong class="price">¥93.0</strong>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>售后与发票管理</h3>
+            <p>可集中查看退款、补发、品质反馈与发票申请记录，企业抬头支持保存税号和收票邮箱。</p>
+            <div class="product-meta">
+              <span class="pill">最近售后：FD2039 已处理</span>
+              <strong class="price">¥102.0</strong>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>会员专属权益</h2>
+        <span>冷链可信</span>
+      </div>
+      <div class="info-grid">
+        
+        <article class="info-card">
+          <strong>会员专属权益</strong>
+          <ul>
+            <li>生日月赠送刺身食材满减券，适用于三文鱼、北极贝和甜虾等指定品类。</li><li>高频用户可开启常购提醒，到港当天推送常买产地与鲜度等级。</li><li>金卡及以上会员享受专属客服，优先处理冷链异常、缺货替换和售后补发。</li>
+          </ul>
+        </article>
+        <article class="info-card">
+          <strong>账户与服务管理</strong>
+          <ul>
+            <li>管理家庭、办公室和餐厅多个收货地址，并为每个地址设置默认配送时段。</li><li>保存常用发票抬头，支持个人普票、企业普票与订单合并开票申请。</li><li>查看检测报告收藏记录，便于复购时对比产地、批次和鲜度标签。</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>完成路径</h2>
+        <span>鲜港达会员</span>
+      </div>
+      <div class="workflow">
+        
+        <div class="step">
+          <b>1</b>
+          <span>查看会员等级</span>
+        </div>
+        <div class="step">
+          <b>2</b>
+          <span>领取专属优惠</span>
+        </div>
+        <div class="step">
+          <b>3</b>
+          <span>维护常购清单</span>
+        </div>
+        <div class="step">
+          <b>4</b>
+          <span>管理地址与发票</span>
+        </div>
+        <div class="step">
+          <b>5</b>
+          <span>跟进售后记录</span>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <aside class="side-note">
+      <strong>账户安全提醒</strong>
+      <ul>
+        <li>支付账户与发票信息仅用于订单履约和开票服务</li><li>更换手机号后需重新验证常用收货地址</li><li>企业采购联系人可在企业采购页单独配置权限</li>
+      </ul>
+    </aside>
+  </main>
+
+  <nav class="bottom-nav" aria-label="主导航">
+    
+    <a class="" href="/">首页</a>
+    <a class="" href="/categories">分类</a>
+    <a class="" href="/cart">购物车</a>
+    <a class="" href="/orders">订单</a>
+    <a class="is-active" href="/profile">我的</a>
+  </nav>
+</body>
+</html>

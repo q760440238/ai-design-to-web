@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>鲜港达 · 结算</title>
+  <style>
+    :root {
+      --primary: #006C70;
+      --secondary: #0EA5A4;
+      --accent: #F59E0B;
+      --ink: #102033;
+      --muted: #607080;
+      --background: #F2FAFA;
+      --surface: #FFFFFF;
+      --line: #D6E7EA;
+      --success: #138A5B;
+      --danger: #C2410C;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      color: var(--ink);
+      background: var(--background);
+      font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: 0;
+    }
+
+    button,
+    input {
+      font: inherit;
+    }
+
+    .app {
+      min-height: 100vh;
+      padding: 14px 14px 76px;
+      background:
+        radial-gradient(circle at 18% 0%, rgba(14, 165, 164, 0.16), transparent 28%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(242, 250, 250, 0.96) 38%, #fff 100%);
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 42px 1fr 42px;
+      align-items: center;
+      gap: 10px;
+      min-height: 48px;
+    }
+
+    .icon-btn {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(16, 32, 51, 0.08);
+      border-radius: 8px;
+      color: var(--ink);
+      background: rgba(255, 255, 255, 0.88);
+      font-weight: 900;
+    }
+
+    .brand {
+      min-width: 0;
+      text-align: center;
+    }
+
+    .brand strong,
+    .brand span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .brand strong {
+      font-size: 15px;
+    }
+
+    .brand span {
+      margin-top: 2px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      margin-top: 12px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.72);
+      border-radius: 10px;
+      color: #fff;
+      background:
+        linear-gradient(135deg, rgba(0, 108, 112, 0.96), rgba(14, 165, 164, 0.86)),
+        linear-gradient(45deg, var(--primary), var(--secondary));
+      box-shadow: 0 16px 34px rgba(0, 108, 112, 0.18);
+    }
+
+    .hero.tone-1 {
+      background:
+        linear-gradient(135deg, rgba(16, 32, 51, 0.95), rgba(0, 108, 112, 0.88)),
+        linear-gradient(45deg, var(--primary), var(--secondary));
+    }
+
+    .hero.tone-2 {
+      background:
+        linear-gradient(135deg, rgba(5, 80, 86, 0.94), rgba(245, 158, 11, 0.74)),
+        linear-gradient(45deg, var(--primary), var(--accent));
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      bottom: -52px;
+      width: 170px;
+      height: 170px;
+      border: 28px solid rgba(255, 255, 255, 0.16);
+      border-radius: 999px;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      gap: 12px;
+    }
+
+    .eyebrow {
+      width: fit-content;
+      max-width: 100%;
+      padding: 6px 9px;
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.14);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 28px;
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 31em;
+      color: rgba(255, 255, 255, 0.86);
+      font-size: 13px;
+      line-height: 1.62;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 9px;
+      flex-wrap: wrap;
+    }
+
+    .hero-actions button {
+      min-height: 38px;
+      padding: 0 13px;
+      border: 0;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .hero-actions button:first-child {
+      color: var(--ink);
+      background: #fff;
+    }
+
+    .hero-actions button:last-child {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.18);
+    }
+
+    .visual-card {
+      position: relative;
+      min-height: 132px;
+      margin-top: 14px;
+      overflow: hidden;
+      border-radius: 10px;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.96), rgba(222, 247, 246, 0.88)),
+        #fff;
+    }
+
+    .visual-card::before,
+    .visual-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+    }
+
+    .visual-card::before {
+      left: 22px;
+      top: 22px;
+      width: 92px;
+      height: 70px;
+      background:
+        radial-gradient(circle at 34% 40%, rgba(245, 158, 11, 0.92), transparent 18%),
+        linear-gradient(135deg, rgba(0, 108, 112, 0.94), rgba(14, 165, 164, 0.82));
+      box-shadow: 100px 26px 0 -18px rgba(245, 158, 11, 0.76), 148px -4px 0 -24px rgba(0, 108, 112, 0.72);
+      transform: rotate(-8deg);
+    }
+
+    .visual-card::after {
+      right: 28px;
+      bottom: 18px;
+      width: 106px;
+      height: 54px;
+      border: 13px solid rgba(14, 165, 164, 0.2);
+      border-left-color: rgba(245, 158, 11, 0.34);
+      transform: rotate(12deg);
+    }
+
+    .visual-card span {
+      position: absolute;
+      left: 18px;
+      bottom: 15px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .metric {
+      min-width: 0;
+      padding: 11px 9px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    .metric strong,
+    .metric span {
+      display: block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .metric strong {
+      color: var(--primary);
+      font-size: 16px;
+    }
+
+    .metric span {
+      margin-top: 3px;
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 850;
+    }
+
+    .search {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .search input {
+      min-width: 0;
+      height: 42px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 0 13px;
+      background: #fff;
+      color: var(--ink);
+      outline: 0;
+    }
+
+    .search button {
+      width: 74px;
+      border: 0;
+      border-radius: 8px;
+      color: #fff;
+      background: var(--primary);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .section {
+      margin-top: 18px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .section-head span {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .card-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .product-card {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 12px;
+      min-width: 0;
+      padding: 10px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(16, 32, 51, 0.06);
+    }
+
+    .thumb {
+      min-height: 78px;
+      border-radius: 8px;
+      background:
+        radial-gradient(circle at 36% 38%, rgba(245, 158, 11, 0.88), transparent 20%),
+        linear-gradient(135deg, rgba(0, 108, 112, 0.86), rgba(14, 165, 164, 0.18)),
+        #e7fbfb;
+    }
+
+    .product-card h3,
+    .product-card p {
+      margin: 0;
+    }
+
+    .product-card h3 {
+      font-size: 14px;
+      line-height: 1.25;
+    }
+
+    .product-card p {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.48;
+    }
+
+    .product-meta {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+
+    .pill {
+      max-width: 100%;
+      padding: 5px 7px;
+      border-radius: 999px;
+      color: var(--primary);
+      background: rgba(14, 165, 164, 0.1);
+      font-size: 10px;
+      font-weight: 900;
+    }
+
+    .price {
+      margin-left: auto;
+      color: var(--accent);
+      font-size: 15px;
+      font-weight: 950;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .info-card {
+      min-width: 0;
+      padding: 13px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .info-card strong {
+      display: block;
+      font-size: 13px;
+      line-height: 1.3;
+    }
+
+    .info-card ul {
+      display: grid;
+      gap: 6px;
+      margin: 9px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .info-card li {
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .workflow {
+      display: grid;
+      gap: 8px;
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: #fff;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 24px 1fr;
+      gap: 9px;
+      align-items: start;
+    }
+
+    .step b {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--primary);
+      font-size: 11px;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+
+    .side-note {
+      margin-top: 14px;
+      padding: 13px;
+      border: 1px solid rgba(245, 158, 11, 0.28);
+      border-radius: 9px;
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .side-note strong {
+      display: block;
+      font-size: 13px;
+    }
+
+    .side-note ul {
+      display: grid;
+      gap: 6px;
+      margin: 8px 0 0;
+      padding-left: 16px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .bottom-nav {
+      position: fixed;
+      left: 14px;
+      right: 14px;
+      bottom: 12px;
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 4px;
+      padding: 7px;
+      border: 1px solid rgba(16, 32, 51, 0.08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.94);
+      box-shadow: 0 14px 36px rgba(16, 32, 51, 0.14);
+      backdrop-filter: blur(18px);
+    }
+
+    .bottom-nav a {
+      min-width: 0;
+      padding: 8px 4px;
+      border-radius: 8px;
+      color: var(--muted);
+      text-align: center;
+      text-decoration: none;
+      font-size: 11px;
+      font-weight: 900;
+    }
+
+    .bottom-nav a.is-active {
+      color: #fff;
+      background: var(--primary);
+    }
+
+    @media (min-width: 700px) {
+      .app {
+        max-width: 430px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <header class="topbar">
+      <button class="icon-btn" type="button" aria-label="菜单">≡</button>
+      <div class="brand">
+        <strong>鲜港达</strong>
+        <span>结算 · /checkout</span>
+      </div>
+      <button class="icon-btn" type="button" aria-label="消息">••</button>
+    </header>
+
+    <section class="hero tone-1">
+      <div class="hero-content">
+        <span class="eyebrow">确认订单 · 安心送达</span>
+        <h1>提交前确认每一份海鲜的来源、温区与到达时间</h1>
+        <p>结算页汇总产地溯源、鲜度标签、检测信息、配送时段和售后保障。支持个人支付、多人拼单代付、企业对公采购与发票申请。</p>
+        <div class="hero-actions">
+          <button type="button">确认支付</button>
+          <button type="button">返回购物车</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="visual-card" aria-label="页面主视觉">
+      <span>完成订单提交前的最终确认，聚合地址、配送时段、发票、支付、冷链要求与售后承诺，提升支付转化和履约确定性。</span>
+    </section>
+
+    <section class="metrics" aria-label="关键指标">
+      
+      <article class="metric">
+        <strong>¥386.20</strong>
+        <span>应付金额</span>
+      </article>
+      <article class="metric">
+        <strong>今日 19:00-21:00</strong>
+        <span>预计送达</span>
+      </article>
+      <article class="metric">
+        <strong>2 个</strong>
+        <span>冷链包裹</span>
+      </article>
+    </section>
+
+    <form class="search">
+      <input aria-label="搜索" value="搜索鲜虾、贝类、刺身、火锅套餐">
+      <button type="button">筛选</button>
+    </form>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>结算确认</h2>
+        <span>查看全部</span>
+      </div>
+      <div class="card-list">
+        
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>收货与验收信息</h3>
+            <p>展示收货地址、联系人、楼宇门禁、配送备注和验收方式。企业采购可指定门店或办公室验收人。</p>
+            <div class="product-meta">
+              <span class="pill">支持默认地址 · 支持临时改约</span>
+              <strong class="price">¥72.0</strong>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>冷链配送确认</h3>
+            <p>按冷藏、冷冻、鲜活拆分包裹，标明温控区间、保温材料、出库节点和骑手交接要求。</p>
+            <div class="product-meta">
+              <span class="pill">全程冷链 · 可追踪温区状态</span>
+              <strong class="price">¥81.0</strong>
+            </div>
+          </div>
+        </article>
+        <article class="product-card">
+          <div class="thumb" aria-hidden="true"></div>
+          <div>
+            <h3>发票与支付方式</h3>
+            <p>个人订单支持电子普票，企业采购支持专票、对公转账和采购备注；多人拼单可按成员生成付款明细。</p>
+            <div class="product-meta">
+              <span class="pill">发票抬头可保存 · 支持微信/支付宝</span>
+              <strong class="price">¥90.0</strong>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>订单确认模块</h2>
+        <span>冷链可信</span>
+      </div>
+      <div class="info-grid">
+        
+        <article class="info-card">
+          <strong>订单确认模块</strong>
+          <ul>
+            <li>商品明细展示规格、预估重量、鲜度等级、产地和处理服务</li><li>优惠区展示会员价、满减券、运费券、团购阶梯优惠和不可用说明</li><li>价格区展示商品金额、处理费、保温费、配送费和多退少补规则</li>
+          </ul>
+        </article>
+        <article class="info-card">
+          <strong>履约与售后承诺</strong>
+          <ul>
+            <li>展示预计分拣、出库、配送中和签收时间，提交后可在订单页查看时间轴</li><li>对鲜活商品标注存活保障范围、签收拍照要求和售后申请时效</li><li>冷链温度异常、配送超时或检测信息缺失时，支持退款、补发或赔付券</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>完成路径</h2>
+        <span>确认订单 · 安心送达</span>
+      </div>
+      <div class="workflow">
+        
+        <div class="step">
+          <b>1</b>
+          <span>确认地址、联系人和配送时段</span>
+        </div>
+        <div class="step">
+          <b>2</b>
+          <span>核对商品、优惠、发票与支付方式</span>
+        </div>
+        <div class="step">
+          <b>3</b>
+          <span>提交订单并进入冷链追踪</span>
+        </div>
+        <div class="step">
+          <b>4</b>
+          <span>完成支付</span>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <aside class="side-note">
+      <strong>结算提醒</strong>
+      <ul>
+        <li>刺身级商品建议选择最早可达时段并签收后尽快冷藏</li><li>企业采购订单请补充发票税号和采购用途，避免后续重开</li><li>会员订单可享优先客服、坏果坏鲜快速赔付和专属复购券</li>
+      </ul>
+    </aside>
+  </main>
+
+  <nav class="bottom-nav" aria-label="主导航">
+    
+    <a class="" href="/">首页</a>
+    <a class="" href="/categories">分类</a>
+    <a class="" href="/cart">购物车</a>
+    <a class="" href="/orders">订单</a>
+    <a class="" href="/profile">我的</a>
+  </nav>
+</body>
+</html>
