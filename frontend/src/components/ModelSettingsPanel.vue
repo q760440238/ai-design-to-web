@@ -128,9 +128,9 @@ onBeforeUnmount(() => {
           </button>
         </header>
 
-        <div class="settings-body">
+        <form id="model-settings-form" class="settings-body" @submit.prevent="saveSettings">
           <label class="runtime-toggle">
-            <input v-model="draft.browserDirectEnabled" type="checkbox" />
+            <input id="model-settings-browser-direct" v-model="draft.browserDirectEnabled" name="browserDirectEnabled" type="checkbox" />
             <span>
               <strong>Web 端直连</strong>
               <small>Agent 任务由浏览器请求模型接口，Key 保存在本机浏览器。</small>
@@ -153,7 +153,7 @@ onBeforeUnmount(() => {
                 <strong>供应商预设</strong>
                 <span>{{ selectedPreset.description }}</span>
               </div>
-              <select v-model="selectedPresetId" aria-label="选择模型供应商预设">
+              <select id="model-provider-preset" v-model="selectedPresetId" name="modelProviderPreset" aria-label="选择模型供应商预设">
                 <option
                   v-for="preset in MODEL_PROVIDER_PRESETS"
                   :key="preset.id"
@@ -176,7 +176,7 @@ onBeforeUnmount(() => {
               <div class="model-card-head">
                 <label>
                   <span>名称</span>
-                  <input v-model.trim="model.name" type="text" />
+                  <input v-model.trim="model.name" :name="`model-${model.id}-name`" type="text" />
                 </label>
                 <button
                   class="icon-button danger-button"
@@ -205,7 +205,7 @@ onBeforeUnmount(() => {
               <div class="settings-grid two">
                 <label>
                   <span>协议</span>
-                  <select v-model="model.protocol">
+                  <select v-model="model.protocol" :name="`model-${model.id}-protocol`">
                     <option value="openai-compatible">OpenAI 兼容</option>
                     <option value="openai-responses">OpenAI Responses</option>
                     <option value="gemini">Gemini GenerateContent</option>
@@ -214,13 +214,13 @@ onBeforeUnmount(() => {
                 </label>
                 <label>
                   <span>模型</span>
-                  <input v-model.trim="model.model" type="text" placeholder="model-name" />
+                  <input v-model.trim="model.model" :name="`model-${model.id}-model`" type="text" placeholder="model-name" />
                 </label>
               </div>
 
               <label>
                 <span>Base URL</span>
-                <input v-model.trim="model.baseUrl" type="text" placeholder="https://api.example.com/v1" />
+                <input v-model.trim="model.baseUrl" :name="`model-${model.id}-base-url`" type="text" placeholder="https://api.example.com/v1" />
               </label>
 
               <div class="settings-grid two">
@@ -228,30 +228,31 @@ onBeforeUnmount(() => {
                   <span>Endpoint</span>
                   <input
                     v-model.trim="model.endpoint"
+                    :name="`model-${model.id}-endpoint`"
                     type="text"
                     :placeholder="model.protocol === 'cn-image2' ? '/v1/media/generate' : '/chat/completions'"
                   />
                 </label>
                 <label>
                   <span>Temperature</span>
-                  <input v-model.number="model.temperature" type="number" min="0" max="2" step="0.1" />
+                  <input v-model.number="model.temperature" :name="`model-${model.id}-temperature`" type="number" min="0" max="2" step="0.1" />
                 </label>
               </div>
 
               <label v-if="model.protocol !== 'cn-image2'">
                 <span>Responses Endpoint</span>
-                <input v-model.trim="model.responsesEndpoint" type="text" placeholder="/v1/responses" />
+                <input v-model.trim="model.responsesEndpoint" :name="`model-${model.id}-responses-endpoint`" type="text" placeholder="/v1/responses" />
               </label>
 
               <template v-if="model.protocol === 'cn-image2'">
                 <div class="settings-grid two">
                   <label>
                     <span>状态 Endpoint</span>
-                    <input v-model.trim="model.statusEndpoint" type="text" placeholder="/v1/media/status" />
+                    <input v-model.trim="model.statusEndpoint" :name="`model-${model.id}-status-endpoint`" type="text" placeholder="/v1/media/status" />
                   </label>
                   <label>
                     <span>图片尺寸</span>
-                    <select v-model="model.size">
+                    <select v-model="model.size" :name="`model-${model.id}-image-size`">
                       <option value="auto">auto</option>
                       <option value="1024x1024">1024x1024</option>
                       <option value="1536x1024">1536x1024</option>
@@ -268,7 +269,7 @@ onBeforeUnmount(() => {
                 <div class="settings-grid two">
                   <label>
                     <span>图片质量</span>
-                    <select v-model="model.quality">
+                    <select v-model="model.quality" :name="`model-${model.id}-image-quality`">
                       <option value="auto">auto</option>
                       <option value="high">high</option>
                       <option value="medium">medium</option>
@@ -277,19 +278,19 @@ onBeforeUnmount(() => {
                   </label>
                   <label>
                     <span>轮询间隔 ms</span>
-                    <input v-model.number="model.pollIntervalMs" type="number" min="1000" step="500" />
+                    <input v-model.number="model.pollIntervalMs" :name="`model-${model.id}-poll-interval`" type="number" min="1000" step="500" />
                   </label>
                 </div>
 
                 <label>
                   <span>最大轮询次数</span>
-                  <input v-model.number="model.maxPollAttempts" type="number" min="1" step="1" />
+                  <input v-model.number="model.maxPollAttempts" :name="`model-${model.id}-max-poll-attempts`" type="number" min="1" step="1" />
                 </label>
               </template>
 
               <label>
                 <span>API Key</span>
-                <input v-model="model.apiKey" type="password" autocomplete="off" />
+                <input v-model="model.apiKey" :name="`model-${model.id}-api-key`" type="password" autocomplete="off" />
               </label>
             </article>
           </section>
@@ -317,7 +318,7 @@ onBeforeUnmount(() => {
                 </div>
                 <label>
                   <span>模型</span>
-                  <select v-model="draft.agentBindings[agent.type].modelConfigId">
+                  <select v-model="draft.agentBindings[agent.type].modelConfigId" :name="`agent-${agent.type}-model`">
                     <option
                       v-for="model in draft.modelConfigs"
                       :key="model.id"
@@ -329,12 +330,12 @@ onBeforeUnmount(() => {
                 </label>
                 <label>
                   <span>任务职责</span>
-                  <textarea v-model="draft.agentBindings[agent.type].taskInstruction" rows="3" />
+                  <textarea v-model="draft.agentBindings[agent.type].taskInstruction" :name="`agent-${agent.type}-instruction`" rows="3" />
                 </label>
               </article>
             </div>
           </section>
-        </div>
+        </form>
 
         <footer class="settings-footer">
           <button class="button button-secondary" type="button" @click="resetSettings">恢复默认</button>

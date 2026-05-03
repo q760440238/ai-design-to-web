@@ -3002,7 +3002,7 @@ onMounted(() => {
         <form class="image-composer" @submit.prevent>
           <label>
             <span>页面描述</span>
-            <textarea v-model="prompt" rows="7" />
+            <textarea id="image-make-prompt" v-model="prompt" name="imageMakePrompt" rows="7" />
           </label>
 
           <section class="reference-upload">
@@ -3094,7 +3094,9 @@ onMounted(() => {
             <label class="html-review-notes-field">
               <span>复核修复注意项</span>
               <textarea
+                id="image-make-html-review-notes"
                 v-model="htmlReviewNotes"
+                name="htmlReviewNotes"
                 rows="4"
                 maxlength="1200"
                 placeholder="例如：重点检查顶部状态栏、学生特惠左侧图标、Banner 图片位置、底部导航高度；缺什么切图就标出来。"
